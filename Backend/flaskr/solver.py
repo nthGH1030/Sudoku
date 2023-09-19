@@ -2,13 +2,6 @@ from flask import Flask, Blueprint, flash, redirect, render_template, request, s
 import time, random
 #from flaskr.db import get_db
 
-bp = Blueprint('solver', __name__)
-
-@bp.route("/solve", methods=["GET"])
-def solver():
-    solve()
-    return render_template("answer.html")
-
 def solve():
     def cross(A, B):
         "Cross product of elements in A and elements in B."
