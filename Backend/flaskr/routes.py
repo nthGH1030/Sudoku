@@ -13,7 +13,11 @@ def index():
 
 @bp.route("/game", methods= ["POST","GET"])
 def game():
-    
+
+    rowInitial = "ABCDEFGHI"
+    colInitial = "123456789"
+    squares = []
+    questionGrid = {}
     question = session.get("question")
     answer = session.get("answer")
 
@@ -22,6 +26,15 @@ def game():
         session["question"] = question
         session["answer"] = answer
 
+    question_index = 0
+    for char in rowInitial:
+        for digit in colInitial:
+            squares.append(char + digit)
+            questionGrid[char + digit] = question[question_index]
+            question_index += 1
+
+    print(questionGrid)
+    #print(squares)
     
     if request.method == "POST":
         userAns = request.form["userAns"]
@@ -36,10 +49,11 @@ def game():
         session["message"] = message
     
         return redirect(url_for("routes.answer"))
+    
     else:
         #check what the answer is in console
         print(answer)
-        return render_template("game.html", question = question)
+        return render_template("game.html", questionGrid = questionGrid, rowInitial = rowInitial, colInitial = colInitial)
 
 @bp.route("/answer", methods= ["POST","GET"])
 def answer():

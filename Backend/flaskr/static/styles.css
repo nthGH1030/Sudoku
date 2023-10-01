@@ -21,3 +21,23 @@ nav .navbar-brand .green
 {
     color: #2e944b;
 }
+
+/* format for table and cells */
+.border-right-width {
+    border-right-width: thick;
+    border-right-color: black;
+}
+
+.border-bottom-width {
+    border-bottom-width: thick;
+    border-bottom-color: black;
+}
+
+.form-center-grid {
+    margin: 0 auto;
+    max-width: 400px; 
+}
+
+.form-table {
+    margin: 0 auto;
+}

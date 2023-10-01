@@ -10,7 +10,7 @@
     
 </div>
 <div>
-    <b>Question: {{question}}</b>
+    <b>Question: {{questionGrid}}</b>
 </div>
 
 <div>
@@ -22,9 +22,64 @@
     </form>
 
 </div>
-
 <div>
-    
+    <br>
+</div>
+<div>
+    <style>
+        table {
+          border-collapse: collapse;
+        }
+        td {
+          width: 40px;
+          height: 40px;
+          text-align: center;
+          border: 1px solid #000;
+        }
+        .thick-border {
+            border-width: 3px;
+        }
+        input {
+          width: 100%;
+          height: 100%;
+          font-size: 18px;
+          text-align: center;
+          border: none;
+        }
+    </style>
+    <head>
+        <title>Sudoku Grid</title>
+    </head>
+    <body>
+        <form method="POST" action="/" class = "form-center-grid">
+            <table class = "form-table">
+                {% set row_count = rowInitial|length %}
+                {% set col_count = colInitial|length %}
+                {% for row_index in range(row_count) %}
+                <tr {% if row_index == 2 or row_index == 5 %} class="border-bottom-width"{% endif %}>
+                    {% for col_index in range(col_count) %}
+                    <td {% if col_index == 2 or col_index == 5 %} class="border-right-width"{% endif %}>
+                        <div>
+                            <input type="number" min="1" max="9" name="{{ rowInitial[row_index] }}{{ colInitial[col_index] }}" 
+                            {% if questionGrid[rowInitial[row_index] + colInitial[col_index]] != "0" %} 
+                                value="{{ questionGrid[rowInitial[row_index] + colInitial[col_index]] }}"
+                            {% endif %}
+                            >
+                        </div>
+                        <div>
+                            {{ rowInitial[row_index] }}{{ colInitial[col_index] }}
+                        </div>
+                        
+                    </td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </table>
+            <div>
+                <br>
+            </div>
+            <button class="btn btn-primary" type="submit">Submit Answer</button>
+        </form>
 </div>
 
 
