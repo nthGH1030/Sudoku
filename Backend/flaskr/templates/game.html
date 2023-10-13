@@ -6,25 +6,9 @@
 
 {% block main %}
 <div>
-    <b>This is the game</b>
-    
-</div>
-<div>
-    <b>Question: {{questionGrid}}</b>
+    <b>Try to solve this soduku question</b>
 </div>
 
-<div>
-    <form action ="#" method ="post">
-        <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="userAns" name="userAns" placeholder="Enter your answer" type="text">
-        <div>
-            <button class="btn btn-primary" type="submit">Submit Answer</button>
-        </div>
-    </form>
-
-</div>
-<div>
-    <br>
-</div>
 <div>
     <style>
         table {
@@ -51,8 +35,8 @@
         <title>Sudoku Grid</title>
     </head>
     <body>
-        <form method="POST" action="/" class = "form-center-grid">
-            <table class = "form-table">
+        <form method="POST" action="#" class = "form-center-grid">
+            <table>
                 {% set row_count = rowInitial|length %}
                 {% set col_count = colInitial|length %}
                 {% for row_index in range(row_count) %}
@@ -63,6 +47,8 @@
                             <input type="number" min="1" max="9" name="{{ rowInitial[row_index] }}{{ colInitial[col_index] }}" 
                             {% if questionGrid[rowInitial[row_index] + colInitial[col_index]] != "0" %} 
                                 value="{{ questionGrid[rowInitial[row_index] + colInitial[col_index]] }}"
+                                    readonly
+                                    class="readonly-cell"
                             {% endif %}
                             >
                         </div>

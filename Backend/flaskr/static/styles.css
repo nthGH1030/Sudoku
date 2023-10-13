@@ -23,21 +23,52 @@ nav .navbar-brand .green
 }
 
 /* format for table and cells */
+td {
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    border: 1px solid #000;
+  }
+  input {
+    width: 100%;
+    height: 100%;
+    font-size: 18px;
+    text-align: center;
+    border: none;
+  }
+
+  /* Printing thick border lines inside the table*/
 .border-right-width {
     border-right-width: thick;
     border-right-color: black;
+    
 }
-
 .border-bottom-width {
     border-bottom-width: thick;
     border-bottom-color: black;
 }
 
+/* format for form */
 .form-center-grid {
     margin: 0 auto;
     max-width: 400px; 
+    flex-direction: column; 
+    align-items: center; 
 }
 
-.form-table {
-    margin: 0 auto;
+/* Highlight cell */
+.readonly-cell {
+    background-color: gray;
+}
+
+.wrongAns-cell {
+    background-color: red;
+}
+
+/* Flexboxes For comparing answers */
+.table-AnswerComparison{
+    display: flex;
+    gap: 20px;;
+    justify-content: center;
+    
 }

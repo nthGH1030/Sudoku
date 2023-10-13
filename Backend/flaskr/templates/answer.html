@@ -5,19 +5,86 @@
 {% endblock %}
 
 {% block main %}
+<style>
+
+</style>
+
 <div>
     <b>This is answer page</b>
     
 </div>
 <div>
-    <b>The question is {{question}}</b>
+    <b>The question is {{questionGrid}}</b>
 </div>
 <div>
-    <b>Your answer is {{userAns}}</b>
+    <b>Your answer is {{userAnsDict}}</b>
 </div>
 <div>
-    <b>The answer is {{answer}}</b>
+    <b>The answer is {{answerGrid}}</b>
 </div>
+
+
+<div class="table-AnswerComparison">
+    <div>
+        <form method="POST" action="#" class = "form-center-grid">
+            <table>
+                <caption>Your Answer</caption>
+                {% set row_count = rowInitial|length %}
+                {% set col_count = colInitial|length %}
+                {% for row_index in range(row_count) %}
+                <tr {% if row_index == 2 or row_index == 5 %} class="border-bottom-width"{% endif %}>
+                    {% for col_index in range(col_count) %}
+                    <td {% if col_index == 2 or col_index == 5 %} class="border-right-width"{% endif %}>
+                        <div>
+                            <input type="number" min="1" max="9" name="{{ rowInitial[row_index] }}{{ colInitial[col_index] }}"                       
+                                value="{{ userAnsDict[rowInitial[row_index] + colInitial[col_index]] }}"
+                                readonly 
+                                class="readonly-cell"
+                            >
+                        </div>
+                        <div>
+                            {{ rowInitial[row_index] }}{{ colInitial[col_index] }}
+                        </div>
+                        
+                    </td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </table>
+        </form>
+    </div>
+
+    <div>
+        <form method="POST" action="#" class = "form-center-grid">
+            <table class = "form-table">
+                <caption>Answer</caption>
+                {% set row_count = rowInitial|length %}
+                {% set col_count = colInitial|length %}
+                {% for row_index in range(row_count) %}
+                <tr {% if row_index == 2 or row_index == 5 %} class="border-bottom-width"{% endif %}>
+                    {% for col_index in range(col_count) %}
+                    <td {% if col_index == 2 or col_index == 5 %} class="border-right-width"{% endif %}>
+                        <div>
+                            <input type="number" min="1" max="9" name="{{ rowInitial[row_index] }}{{ colInitial[col_index] }}"                       
+                                value="{{ answerGrid[rowInitial[row_index] + colInitial[col_index]] }}"
+                                readonly 
+                                class="readonly-cell"
+                            >
+                        </div>
+                        <div>
+                            {{ rowInitial[row_index] }}{{ colInitial[col_index] }}
+                        </div>
+                        
+                    </td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </table>
+        </form>
+    </div>
+</div>
+
+
 <div>
     <b>{{message}}</b>
 </div>

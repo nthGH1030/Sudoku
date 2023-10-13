@@ -18,6 +18,7 @@ def game():
     colInitial = "123456789"
     squares = []
     questionGrid = {}
+    answerGrid = {}
     question = session.get("question")
     answer = session.get("answer")
 
@@ -26,41 +27,55 @@ def game():
         session["question"] = question
         session["answer"] = answer
 
-    question_index = 0
+    index = 0
     for char in rowInitial:
         for digit in colInitial:
             squares.append(char + digit)
-            questionGrid[char + digit] = question[question_index]
-            question_index += 1
+            questionGrid[char + digit] = question[index]
+            answerGrid[char + digit] = answer[index]
+            index += 1
+    
+    session["answerGrid"] = answerGrid
+    session["questionGrid"] = questionGrid
 
-    print(questionGrid)
+    #print(questionGrid)
     #print(squares)
+    #print(answerGrid)
     
     if request.method == "POST":
-        userAns = request.form["userAns"]
-        answer = session["answer"]
-        
-        if answer == userAns:
+        userAnsDict = {}
+        for square in squares:
+            userAnsDict[square] = request.form[square]
+        #print(userAnsDict)
+
+        if answerGrid == userAnsDict:
             message = "Congrats your answer is correct"
         else:
             message = "Your answer is incorrect"
 
-        session["userAns"] = userAns
+        session["userAnsDict"] = userAnsDict
         session["message"] = message
-    
+        
         return redirect(url_for("routes.answer"))
     
     else:
         #check what the answer is in console
-        print(answer)
+        print(answerGrid)
         return render_template("game.html", questionGrid = questionGrid, rowInitial = rowInitial, colInitial = colInitial)
 
 @bp.route("/answer", methods= ["POST","GET"])
 def answer():
-    userAns = session.get("userAns")
+    rowInitial = "ABCDEFGHI"
+    colInitial = "123456789"
+    
+    userAnsDict = session.get("userAnsDict")
     message = session.get("message")
-    question = session.get("question")
-    answer = session.get("answer")
+    questionGrid = session.get("questionGrid")
+    answerGrid = session.get("answerGrid")
 
-    return render_template("answer.html", userAns = userAns, message = message, answer = answer, question = question)
+    
+
+    return render_template("answer.html", userAnsDict = userAnsDict, message = message, 
+                           answerGrid = answerGrid, questionGrid = questionGrid
+                           ,rowInitial = rowInitial, colInitial = colInitial)
 
