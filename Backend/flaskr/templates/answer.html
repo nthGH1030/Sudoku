@@ -5,23 +5,7 @@
 {% endblock %}
 
 {% block main %}
-<style>
 
-</style>
-
-<div>
-    <b>This is answer page</b>
-    
-</div>
-<div>
-    <b>The question is {{questionGrid}}</b>
-</div>
-<div>
-    <b>Your answer is {{userAnsDict}}</b>
-</div>
-<div>
-    <b>The answer is {{answerGrid}}</b>
-</div>
 
 
 <div class="table-AnswerComparison">
@@ -35,17 +19,17 @@
                 <tr {% if row_index == 2 or row_index == 5 %} class="border-bottom-width"{% endif %}>
                     {% for col_index in range(col_count) %}
                     <td {% if col_index == 2 or col_index == 5 %} class="border-right-width"{% endif %}>
-                        <div>
                             <input type="number" min="1" max="9" name="{{ rowInitial[row_index] }}{{ colInitial[col_index] }}"                       
                                 value="{{ userAnsDict[rowInitial[row_index] + colInitial[col_index]] }}"
                                 readonly 
-                                class="readonly-cell"
+                                {% if questionGrid[rowInitial[row_index] + colInitial[col_index]] == userAnsDict[rowInitial[row_index] + colInitial[col_index]] %}
+                                    class="question-cell"
+                                {% elif userAnsDict[rowInitial[row_index] + colInitial[col_index]] != answerGrid[rowInitial[row_index] + colInitial[col_index]] %}
+                                    class = "wrongAns-cell"
+                                {% else %}
+                                    class="userAns-cell"
+                                {% endif %}
                             >
-                        </div>
-                        <div>
-                            {{ rowInitial[row_index] }}{{ colInitial[col_index] }}
-                        </div>
-                        
                     </td>
                     {% endfor %}
                 </tr>
@@ -64,17 +48,11 @@
                 <tr {% if row_index == 2 or row_index == 5 %} class="border-bottom-width"{% endif %}>
                     {% for col_index in range(col_count) %}
                     <td {% if col_index == 2 or col_index == 5 %} class="border-right-width"{% endif %}>
-                        <div>
                             <input type="number" min="1" max="9" name="{{ rowInitial[row_index] }}{{ colInitial[col_index] }}"                       
                                 value="{{ answerGrid[rowInitial[row_index] + colInitial[col_index]] }}"
                                 readonly 
-                                class="readonly-cell"
+                                class="question-cell"
                             >
-                        </div>
-                        <div>
-                            {{ rowInitial[row_index] }}{{ colInitial[col_index] }}
-                        </div>
-                        
                     </td>
                     {% endfor %}
                 </tr>

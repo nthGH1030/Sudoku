@@ -28,14 +28,31 @@ td {
     height: 40px;
     text-align: center;
     border: 1px solid #000;
+    padding :0;
   }
-  input {
+
+
+input[type="number"]{
     width: 100%;
     height: 100%;
     font-size: 18px;
     text-align: center;
+    margin: 0;
+    padding: 0;
     border: none;
+    box-sizing: border-box;
+    -moz-appearance: textfield; /* Remove arrow in Firefox */
+    -webkit-appearance: none; /* Remove arrow in WebKit browsers */
+    appearance: none;
   }
+
+/* Remove arrow in WebKit browsers */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 
   /* Printing thick border lines inside the table*/
 .border-right-width {
@@ -57,11 +74,15 @@ td {
 }
 
 /* Highlight cell */
-.readonly-cell {
-    background-color: gray;
+.question-cell {
+    background-color: lightgrey;
 }
 
-.wrongAns-cell {
+.userAns-cell {
+    background-color: lightgreen;
+}
+
+.wrongAns-cell{
     background-color: red;
 }
 
@@ -70,5 +91,7 @@ td {
     display: flex;
     gap: 20px;;
     justify-content: center;
+    flex-grow: 0;
+    flex-shrink: 0;
     
 }
