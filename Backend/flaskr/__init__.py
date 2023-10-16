@@ -1,3 +1,4 @@
+import os
 from flask import Flask
 
 def create_app():
@@ -7,7 +8,14 @@ def create_app():
     # import blueprints
     from . import routes
     app.register_blueprint(routes.bp)
-    app.secret_key = 'your_secret_key'
+
+    app.config.from_mapping(
+        SECRET_KEY='dev',
+        DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
+    )
+    #import database
+    from . import db
+    db.init_app(app)
 
     return app
 

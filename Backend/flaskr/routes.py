@@ -1,14 +1,12 @@
 from flask import Flask, flash, redirect, render_template, request, session, url_for, Blueprint
 from werkzeug.security import check_password_hash, generate_password_hash
 from . import solver
-
+from flaskr.db import get_db
 
 bp = Blueprint('routes',__name__)
-#bp.secret_key = 'your_secret_key'
 
 @bp.route("/", methods=["GET"])
 def index():
-    #If user click the "Game button", route them to "game"
     return render_template("index.html")
 
 @bp.route("/game", methods= ["POST","GET"])
@@ -78,4 +76,3 @@ def answer():
     return render_template("answer.html", userAnsDict = userAnsDict, message = message, 
                            answerGrid = answerGrid, questionGrid = questionGrid
                            ,rowInitial = rowInitial, colInitial = colInitial)
-
