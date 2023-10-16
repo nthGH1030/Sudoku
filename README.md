@@ -18,9 +18,9 @@ the first workable version of the game
 Implement data-base
 - create tables that save question, answer and user id in schema (done)
 
-**------!!!!!!!!! currently the database can run, but nothing is added into the database------**
 
-- The database shall pre-load solve() to save question and answers before app launch
+- The database shall pre-load solve() to save question and answers before app launch (done)
+
 - replace the sessions implementation inside the script and use database to get question and answers
 
 Implement register and login

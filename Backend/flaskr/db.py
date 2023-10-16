@@ -41,7 +41,7 @@ def init_db():
         questionGrid = {}
         answerGrid = {}
 
-        for i in range(5):
+        for i in range(20):
             question, answer = solver.solve()
             for char in rowInitial:
                 index = 0
@@ -62,7 +62,7 @@ def init_db():
                     )
                     
                     index += 1
-                    
+
         db.commit()
 
 
