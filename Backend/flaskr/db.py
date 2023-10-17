@@ -40,11 +40,12 @@ def init_db():
         squares = []
         questionGrid = {}
         answerGrid = {}
+        
 
         for i in range(20):
+            index = 0
             question, answer = solver.solve()
             for char in rowInitial:
-                index = 0
                 for digit in colInitial:
                     #squares.append(char + digit)
                     #questionGrid[char + digit] = question[index]

@@ -17,17 +17,15 @@
     <body>
         <form method="POST" action="#" class = "form-center-grid">
             <table>
-                {% set row_count = rowInitial|length %}
-                {% set col_count = colInitial|length %}
-                {% for row_index in range(row_count) %}
+                {% for row_index in range(rowInitial|length) %}
                 <tr {% if row_index == 2 or row_index == 5 %} class="border-bottom-width"{% endif %}>
-                    {% for col_index in range(col_count) %}
+                    {% for col_index in range(colInitial|length) %}
                     <td {% if col_index == 2 or col_index == 5 %} class="border-right-width"{% endif %}>
-                            <input type="number" min="1" max="9" name="{{ rowInitial[row_index] }}{{ colInitial[col_index] }}" 
-                            {% if questionGrid[rowInitial[row_index] + colInitial[col_index]] != "0" %} 
-                                value="{{ questionGrid[rowInitial[row_index] + colInitial[col_index]] }}"
+                        <input type="number" min="1" max="9" name="{{ rowInitial[row_index] + colInitial[col_index] }}" 
+                            {% if question_dict[rowInitial[row_index] + colInitial[col_index]] != '0' %}                             
+                                value="{{ question_dict[rowInitial[row_index] + colInitial[col_index]] }}"
                                     readonly
-                                    class="question-cell"
+                                    class="question-cell "
                             {% endif %}
                             >
                         

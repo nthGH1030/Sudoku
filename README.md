@@ -15,13 +15,16 @@ the first workable version of the game
 - Highlight the answer input that is wrong (done)
 - Highlight the question inside the answer in different color (done)
 
-Implement data-base
+Implement database
 - create tables that save question, answer and user id in schema (done)
-
 
 - The database shall pre-load solve() to save question and answers before app launch (done)
 
-- replace the sessions implementation inside the script and use database to get question and answers
+**#---it seemed i cannot assign questionkey and answer to question_db due to data type issue, perhaps the query reply is a dict ?-----#**
+
+- replace the sessions implementation inside the script and use database to get question in "Game route" (done)
+
+- and then in answer "route"
 
 Implement register and login
 - implement user login and logout using session
