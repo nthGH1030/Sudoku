@@ -13,18 +13,16 @@
         <form method="POST" action="#" class = "form-center-grid">
             <table>
                 <caption>Your Answer</caption>
-                {% set row_count = rowInitial|length %}
-                {% set col_count = colInitial|length %}
-                {% for row_index in range(row_count) %}
+                {% for row_index in range(rowInitial|length) %}
                 <tr {% if row_index == 2 or row_index == 5 %} class="border-bottom-width"{% endif %}>
-                    {% for col_index in range(col_count) %}
+                    {% for col_index in range(colInitial|length) %}
                     <td {% if col_index == 2 or col_index == 5 %} class="border-right-width"{% endif %}>
                             <input type="number" min="1" max="9" name="{{ rowInitial[row_index] }}{{ colInitial[col_index] }}"                       
                                 value="{{ userAnsDict[rowInitial[row_index] + colInitial[col_index]] }}"
                                 readonly 
-                                {% if questionGrid[rowInitial[row_index] + colInitial[col_index]] == userAnsDict[rowInitial[row_index] + colInitial[col_index]] %}
+                                {% if question_dict[rowInitial[row_index] + colInitial[col_index]] == userAnsDict[rowInitial[row_index] + colInitial[col_index]] %}
                                     class="question-cell"
-                                {% elif userAnsDict[rowInitial[row_index] + colInitial[col_index]] != answerGrid[rowInitial[row_index] + colInitial[col_index]] %}
+                                {% elif userAnsDict[rowInitial[row_index] + colInitial[col_index]] != answer_dict[rowInitial[row_index] + colInitial[col_index]] %}
                                     class = "wrongAns-cell"
                                 {% else %}
                                     class="userAns-cell"
@@ -42,14 +40,12 @@
         <form method="POST" action="#" class = "form-center-grid">
             <table class = "form-table">
                 <caption>Answer</caption>
-                {% set row_count = rowInitial|length %}
-                {% set col_count = colInitial|length %}
-                {% for row_index in range(row_count) %}
+                {% for row_index in range(rowInitial|length) %}
                 <tr {% if row_index == 2 or row_index == 5 %} class="border-bottom-width"{% endif %}>
-                    {% for col_index in range(col_count) %}
+                    {% for col_index in range(colInitial|length) %}
                     <td {% if col_index == 2 or col_index == 5 %} class="border-right-width"{% endif %}>
                             <input type="number" min="1" max="9" name="{{ rowInitial[row_index] }}{{ colInitial[col_index] }}"                       
-                                value="{{ answerGrid[rowInitial[row_index] + colInitial[col_index]] }}"
+                                value="{{ answer_dict[rowInitial[row_index] + colInitial[col_index]] }}"
                                 readonly 
                                 class="question-cell"
                             >
