@@ -37,10 +37,6 @@ def init_db():
         #insert 20 set of question and answers into the database
         rowInitial = "ABCDEFGHI"
         colInitial = "123456789"
-        squares = []
-        questionGrid = {}
-        answerGrid = {}
-        
 
         for i in range(20):
             index = 0

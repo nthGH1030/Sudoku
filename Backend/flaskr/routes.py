@@ -11,7 +11,19 @@ bp = Blueprint('routes',__name__)
 def index():
     return render_template("index.html")
 
+#Require user to login before creating, editing and deleting blog posts
+def login_required(view):
+    @functools.wraps(view)
+    def wrapped_view(**kwargs):
+        if g.user is None:
+            return redirect(url_for('routes.index'))
+
+        return view(**kwargs)
+
+    return wrapped_view
+
 @bp.route("/game", methods= ["POST","GET"])
+@login_required
 def game():
 
     # thins that got run no matter its get or post
@@ -82,6 +94,7 @@ def game():
                            rowInitial = rowInitial, colInitial = colInitial)
 
 @bp.route("/answer", methods= ["POST","GET"])
+@login_required
 def answer():
 
     userAnsDict = session.get("userAnsDict")
@@ -155,7 +168,7 @@ def register():
             except db.IntegrityError:
                 error = f"User {username} is already registered."
             else:
-                return redirect(url_for("auth.login"))
+                return redirect(url_for("/login"))
 
         flash(error)
 
@@ -180,7 +193,7 @@ def login():
         if error is None:
             session.clear()
             session['user_id'] = user['id']
-            return redirect(url_for('index'))
+            return redirect(url_for('routes.index'))
 
         flash(error)
 
@@ -204,13 +217,3 @@ def logout():
     session.clear()
     return redirect(url_for('routes.index'))
 
-#Require user to login before creating, editing and deleting blog posts
-def login_required(view):
-    @functools.wraps(view)
-    def wrapped_view(**kwargs):
-        if g.user is None:
-            return redirect(url_for('routes.index'))
-
-        return view(**kwargs)
-
-    return wrapped_view
