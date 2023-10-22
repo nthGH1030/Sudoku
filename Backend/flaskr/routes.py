@@ -7,11 +7,17 @@ import functools
 
 bp = Blueprint('routes',__name__)
 
-@bp.route("/", methods=["GET"])
-def index():
-    return render_template("index.html")
+# Set up Key for dictionary
+rowInitial = "ABCDEFGHI"
+colInitial = "123456789"
+squares = []
+index = 0
+for char in rowInitial:
+    for digit in colInitial:
+        squares.append(char + digit)
+        index += 1
 
-#Require user to login before creating, editing and deleting blog posts
+#Helper function to require user to login before playing the game
 def login_required(view):
     @functools.wraps(view)
     def wrapped_view(**kwargs):
@@ -22,19 +28,26 @@ def login_required(view):
 
     return wrapped_view
 
+#Helper function to check if user is still in session
+@bp.before_app_request
+def load_logged_in_user():
+    user_id = session.get('user_id')
+
+    if user_id is None:
+        g.user = None
+    else:
+        g.user = get_db().execute(
+            'SELECT * FROM user WHERE id = ?', (user_id,)
+        ).fetchone()
+
+
+@bp.route("/", methods=["GET"])
+def index():
+    return render_template("index.html")
+
 @bp.route("/game", methods= ["POST","GET"])
 @login_required
 def game():
-
-    # thins that got run no matter its get or post
-    rowInitial = "ABCDEFGHI"
-    colInitial = "123456789"
-    squares = []
-    index = 0
-    for char in rowInitial:
-        for digit in colInitial:
-            squares.append(char + digit)
-            index += 1
 
     db = get_db()
     question_id = None
@@ -99,16 +112,6 @@ def answer():
 
     userAnsDict = session.get("userAnsDict")
     message = session.get("message")
-
-    rowInitial = "ABCDEFGHI"
-    colInitial = "123456789"
-    squares = []
-    index = 0
-    for char in rowInitial:
-        for digit in colInitial:
-            squares.append(char + digit)
-            index += 1
-    
     question_id = session.get("question_id")
 
     db = get_db()
@@ -199,17 +202,6 @@ def login():
 
     return render_template("login.html")
 
-#Check if user is still in session
-@bp.before_app_request
-def load_logged_in_user():
-    user_id = session.get('user_id')
-
-    if user_id is None:
-        g.user = None
-    else:
-        g.user = get_db().execute(
-            'SELECT * FROM user WHERE id = ?', (user_id,)
-        ).fetchone()
 
 #logout when session is cleared
 @bp.route('/logout')
