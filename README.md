@@ -20,14 +20,19 @@ Implement database
 
 - The database shall pre-load solve() to save question and answers before app launch (done)
 
-**#---it seemed i cannot assign questionkey and answer to question_db due to data type issue, perhaps the query reply is a dict ?-----#**
-
 - replace the sessions implementation inside the script and use database to get question in "Game route" (done)
 
-- and then in answer "route"
+- and then in answer "route" (Done)
 
 Implement register and login
-- implement user login and logout using session
+- Implement routes and htmls (done)
+- implement user login and logout using session (done)
+- update method to require login to use game feature (Done)
+- how the login id name on the top right corner
 
 Additioanl feature
 - Add a button in "game" page that allow the question to be reset
+
+Deployment
+- create a main.py at root
+- redo file structure and put init.py at root
