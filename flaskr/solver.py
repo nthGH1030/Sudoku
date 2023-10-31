@@ -1,4 +1,3 @@
-from flask import Flask, Blueprint, flash, redirect, render_template, request, session
 import time, random
 #from flaskr.db import get_db
 
@@ -188,45 +187,3 @@ def solve():
     return returnValue
     
 
-    
-
-
-"""
-#Route to get question and answer
-def getAnsQuestion(question, answer):       
-    db = get_db()
-    db.execute(
-    "INSERT INTO puzzle(question) VALUES(?)", (question,)
-    )
-
-    question_id_object = db.execute('SELECT id from puzzle where question = ?',(question,))
-    for row in question_id_object:
-        question_id = row[0]
-
-    for k,v in answer.items():
-        db.execute(
-        "INSERT INTO answer(dict_key, dict_value, question_id) VALUES(?,?,?)", 
-        (k,v, question_id)
-        )
-
-    '''   
-    test = db.execute('SELECT * from answer')
-    ans = list()
-    for row in test:
-        ans.append([row[0],row[1],row[2],row[3]])
-
-    return ans
-    '''
-
-    test = db.execute('SELECT * from answer')
-    ans = {"answer_id":[], "question_id":[], "square":[],"answer":[]}
-    anslist= list()
-    for row in test:
-        ans["answer_id"]= row[0]
-        ans["question_id"] = row[1]
-        ans["square"] = row[2]
-        ans["answer"] = row[3]
-        anslist.append(ans.copy())
-    return anslist
- 
-"""

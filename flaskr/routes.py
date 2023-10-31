@@ -1,6 +1,5 @@
-from flask import Flask, flash, redirect, render_template, g,request, session, url_for, Blueprint
+from flask import flash, redirect, render_template, g,request, session, url_for, Blueprint
 from werkzeug.security import check_password_hash, generate_password_hash
-from . import solver
 from flaskr.db import get_db
 import random
 import functools
@@ -50,8 +49,9 @@ def index():
 def game():
 
     db = get_db()
-    question_id = None
-
+    if "question_id" in session:
+        question_id = session.get("question_id")
+    
     #Get the question from database
     if request.method =="GET":
         question_id = random.randint(0, 19)
@@ -72,12 +72,28 @@ def game():
         print("this is question_dict from database")
         print(question_dict)
 
+        answer_db = db.execute(
+            'SELECT ans_key, ans_value FROM answer'
+            ' WHERE question_id = ?',
+            (question_id,)
+        ).fetchall()
+
+        answer_dict = {}
+        for row in answer_db:
+            answer_key = row['ans_key']
+            answer_value = row['ans_value']
+            answer_dict[answer_key] = answer_value
+
+        print("This is the answer")
+        print(answer_dict)
+
     # Get the answer from database, compare with user answer and post it 
     if request.method == "POST":
         userAnsDict = {}
         for square in squares:
             userAnsDict[square] = request.form[square]
-        #print(userAnsDict)
+        print("this is userdict")
+        print(userAnsDict)
 
         answer_db = db.execute(
             'SELECT ans_key, ans_value FROM answer'
@@ -90,13 +106,17 @@ def game():
             answer_key = row['ans_key']
             answer_value = row['ans_value']
             answer_dict[answer_key] = answer_value
+            
         print("This is the answer_dict from answer")
         print(answer_dict)
+        
 
         if answer_dict == userAnsDict:
             message = "Congrats your answer is correct"
+            print("correct")
         else:
             message = "Your answer is incorrect"
+            print("incorrect")
 
         session["userAnsDict"] = userAnsDict
         session["message"] = message
@@ -126,8 +146,8 @@ def answer():
         question_key = row['question_key']
         question_value = row['question_value']
         question_dict[question_key] = question_value
-    print("this is question_dict from database")
-    print(question_dict)
+    #print("this is question_dict from database")
+    #print(question_dict)
 
     answer_db = db.execute(
         'SELECT ans_key, ans_value FROM answer'
@@ -140,8 +160,8 @@ def answer():
         answer_key = row['ans_key']
         answer_value = row['ans_value']
         answer_dict[answer_key] = answer_value
-    print("This is the answer_dict from answer")
-    print(answer_dict)
+    #print("This is the answer_dict from answer")
+    #print(answer_dict)
 
 
     return render_template("answer.html", userAnsDict = userAnsDict, message = message, 
